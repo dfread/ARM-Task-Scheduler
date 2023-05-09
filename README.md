@@ -11,8 +11,8 @@ This project includes two schedulers based on the Arm® Cortex®-M0+ processor a
 
 Both schedulers have their own custom feature that differentiates them:
 	
-	multitask_prio: Each task can request a priority level change from their default value from the processor. This is always granted as of the current version of the scheduler.
-	multitask_sleep: Each task can put itself to sleep and therefore relinquish their time slices to a different task that is awake. Still scheduled round robin, but when the scheduler detects the task is asleep, it immediately swaps to the next task.
+multitask_prio: Each task can request a priority level change from their default value from the processor. This is always granted as of the current version of the scheduler.
+multitask_sleep: Each task can put itself to sleep and therefore relinquish their time slices to a different task that is awake. Still scheduled round robin, but when the scheduler detects the task is asleep, it immediately swaps to the next task.
 		If all tasks are asleep, the scheduler 'times out' and swaps to a NO_OP state. The scheduler will continuously search for a task that has awaken while in NO_OP, and switch to the latest task found to be awake on next SysTick. 
 
 These custom features were made utilizing the SVC function (SuperVisor Call) in ARM assembly. As such, the arguments for these functions are limited from 0-255. The units for the arguments are time slices (about 1/3 of a second).
