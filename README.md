@@ -16,8 +16,6 @@ Both schedulers have their own custom feature that differentiates them:
 		If all tasks are asleep, the scheduler 'times out' and swaps to a NO_OP state. The scheduler will continuously search for a task that has awaken while in NO_OP, and switch to the latest task found to be awake on next SysTick. 
 
 These custom features were made utilizing the SVC function (SuperVisor Call) in ARM assembly. As such, the arguments for these functions are limited from 0-255. The units for the arguments are time slices (about 1/3 of a second).
-
-***(WRITTEN BY DANIEL FREAD)***
 =============================================================================================================================================================================================================================================================================================================================
 ***(WRITTEN BY DOUGLAS SUMMERVILLE)***
 
@@ -36,5 +34,3 @@ LIBS="redled.o" make testredled.srec
 Multiple driver .o files are space-separated within the quotes.
 
 Note that the startup code is squeezed into flash memory before the flash configuration block at 0x0400.  If the startup code is modified, it may no longer fit and could over-write the configuration block.  There is no check for this.  Therfore, if the _startup.c is modified this should be verified (it may fail to link but this has not been tested).
-
-***(WRITTEN BY DOUGLAS SUMMERVILLE)***
