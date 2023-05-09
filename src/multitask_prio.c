@@ -140,19 +140,19 @@ __attribute__ ((naked)) void PendSV_Handler()
 
 	//note this sequence will dirty registers and that's okay
 	//save this process stack
-	task_stack[task_number][STACK_SIZE-1] = __get_PSP();
+	task_stack[task_number][STACK_PTR_LOC] = __get_PSP();
 
 	//schedule next task
 	task_number = (task_number >= NUM_TASKS-1) ? 0:task_number+1;
 
 	//Load priority level/time slice amount
-	num_slices = task_stack[task_number][STACK_SIZE-2];
+	num_slices = task_stack[task_number][DEFAULT_PRIO_LOC];
 
 	print_hex8(num_slices);
 	print_str("\n\r");
 
 	//get task SP
-	__set_PSP(task_stack[task_number][STACK_SIZE-1]); 
+	__set_PSP(task_stack[task_number][STACK_PTR_LOC]); 
 
 	//restore next context
 	asm("mrs r0,psp"); 
@@ -184,7 +184,7 @@ void SVC_Handler() //Go here upon program start, and only if a task wants to cha
 		//Unprivileged Mode (not all registers can be accessed)
 		__set_CONTROL(0x03);
 		//start first task
-		__set_PSP(task_stack[task_number][STACK_SIZE-1]); 
+		__set_PSP(task_stack[task_number][STACK_PTR_LOC]); 
 		//trigger PENDSV
 		SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
 		first_Svc_hit = false;
@@ -196,7 +196,7 @@ void SVC_Handler() //Go here upon program start, and only if a task wants to cha
 		asm("MRS %0,PSP":"=r"(SP_reg)); //grabs PSP of current task and places it into SP_reg
 		PC_reg = SP_reg[6]; //SVC instruction is located one word before program counter in stack, which is 6 words down from PSP
 		new_prio = PC_reg[-1] & 0xFF; //The argument for the priority change is in the least significant 8 bits
-		task_stack[task_number][STACK_SIZE-2] = new_prio; //Replace original value in stack with requested priority level
+		task_stack[task_number][DEFAULT_PRIO_LOC] = new_prio; //Replace original value in stack with requested priority level
 		print_str("Task "); print_hex8(task_number); print_str(" just changed it's priority level to "); print_hex8((new_prio)); print_str("\n\r");
 	}
 }
