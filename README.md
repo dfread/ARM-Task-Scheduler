@@ -1,4 +1,4 @@
-***(WRITTEN BY DANIEL FREAD)***
+***(BELOW WRITTEN BY DANIEL FREAD)***
 
 This project includes two schedulers based on the Arm® Cortex®-M0+ processor architecture. They function very similarly:
 - Each schedules 3 tasks
@@ -16,7 +16,7 @@ Both schedulers have their own custom feature that differentiates them:
 
 These custom features were made utilizing the SVC function (SuperVisor Call) in ARM assembly. As such, the arguments for these functions are limited from 0-255. The units for the arguments are time slices (about 1/3 of a second).
 =============================================================================================================================================================================================================================================================================================================================
-***(WRITTEN BY DOUGLAS SUMMERVILLE)***
+***(BELOW WRITTEN BY DOUGLAS SUMMERVILLE)***
 
 # BareMetal-FRDM-KL25z
 Bare Metal Development Environment for FRDM-KL25z Board
