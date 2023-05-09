@@ -1,0 +1,19 @@
+#########################################################################
+To build an application:
+	make LIBS="driver1.o driver2.o" OPT_LEVEL="-Os -flto" USER_MACRO="-DWATCHDOG_DISABLE" app_name.elf
+
+Other make targets:
+
+  clean
+	removes executables, object files, and other build by products
+
+  program
+	programs the target microcontroller.  Requires exactly one .elf
+        file to exist in the current directory
+
+  usage
+	prints this message
+
+  board_plugged_in
+        reports whether the microcontoller board is detected
+#########################################################################
